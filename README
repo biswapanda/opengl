@@ -1,0 +1,7 @@
+
+
+# set up open gl in mac
+brew tap homebrew/versions
+brew install glfw3
+brew install glew
+
