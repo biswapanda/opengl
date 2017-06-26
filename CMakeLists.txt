@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.7)
+project(opengl)
+
+set(CMAKE_CXX_STANDARD 11)
+add_executable(hello_world hello_world.cpp)
+
+IF(APPLE)
+    INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+    find_package(PkgConfig REQUIRED)
+    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+    FIND_LIBRARY(GLUT_LIBRARY GLUT )
+    FIND_LIBRARY(OpenGL_LIBRARY OpenGL )
+    FIND_LIBRARY(IOKit_LIBRARY IOKit)
+    pkg_search_module(GLFW REQUIRED glfw3)
+    include_directories(${GLFW_INCLUDE_DIRS})
+    MARK_AS_ADVANCED (COCOA_LIBRARY  GLUT_LIBRARY  OpenGL_LIBRARY)
+    SET(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY} ${IOKit_LIBRARY})
+    target_link_libraries(hello_world ${GLFW_LIBRARIES})
+    target_link_libraries(hello_world ${GLFW_STATIC_LIBRARIES})
+ENDIF (APPLE)
+
+target_link_libraries(hello_world ${EXTRA_LIBS})
